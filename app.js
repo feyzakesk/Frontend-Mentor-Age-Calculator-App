@@ -21,31 +21,40 @@ let year = date.getFullYear();
 
 const months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-function validate(){
+function validate() {
     const inputs = document.querySelectorAll("input");
     let validator = true;
+    const currentYear = new Date().getFullYear(); // Mevcut yılı alır
+
     inputs.forEach((i) => {
-        const parent = i.parentElement; 
-        if(!i.value){
+        const parent = i.parentElement;
+        
+        if (!i.value) {
             i.style.borderColor = "red";
-            parent.querySelector("small").innerText = "this field is required.";
+            parent.querySelector("small").innerText = "This field is required.";
             validator = false;
-        }else if(monthInp.value > 12){
+        } else if (monthInp.value > 12 || monthInp.value < 1) {
             monthInp.style.borderColor = "red";
-            monthInp.parentElement.querySelector("small").innerText = "must be a valid month.";
+            monthInp.parentElement.querySelector("small").innerText = "Must be a valid month.";
             validator = false;
-        }else if(dayInp.value > 31){
+        } else if (dayInp.value > 31 || dayInp.value < 1) {
             dayInp.style.borderColor = "red";
-            dayInp.parentElement.querySelector("small").innerText = "must be a valid day.";
+            dayInp.parentElement.querySelector("small").innerText = "Must be a valid day.";
             validator = false;
-        }else{
+        } else if (yearInp.value > currentYear || yearInp.value < 1) {
+            yearInp.style.borderColor = "red";
+            yearInp.parentElement.querySelector("small").innerText = "Must be a valid year.";
+            validator = false;
+        } else {
             i.style.borderColor = "black";
             parent.querySelector("small").innerText = "";
             validator = true;
         }
-    })
+    });
+
     return validator;
 }
+
 
 function handleSubmit(e){
     e.preventDefault();
